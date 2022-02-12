@@ -88,6 +88,11 @@ public class Menu extends javax.swing.JFrame {
         menuInicio.add(jMenu4);
 
         itnHistorico.setText("Histórico");
+        itnHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itnHistoricoActionPerformed(evt);
+            }
+        });
         menuInicio.add(itnHistorico);
 
         itnSobre.setText("Sobre");
@@ -129,6 +134,13 @@ public class Menu extends javax.swing.JFrame {
         painelDesktop.add(frameCampo);
         frameCampo.setVisible(true);
     }//GEN-LAST:event_itnFacilActionPerformed
+
+    private void itnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnHistoricoActionPerformed
+        FrameHistorico frameHistorico = new FrameHistorico();
+        painelDesktop.add(frameHistorico);
+        
+        frameHistorico.setVisible(true);
+    }//GEN-LAST:event_itnHistoricoActionPerformed
 
     
     /**
