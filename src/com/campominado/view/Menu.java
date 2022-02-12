@@ -6,6 +6,9 @@
 package com.campominado.view;
 
 import com.campominado.controller.CampoVirtual;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -33,6 +36,7 @@ public class Menu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        painelDesktop = new javax.swing.JDesktopPane();
         jMenuBar2 = new javax.swing.JMenuBar();
         menuInicio = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -49,6 +53,19 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem5.setText("jMenuItem5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Campo Minado");
+        setName("frmPrincipal"); // NOI18N
+
+        javax.swing.GroupLayout painelDesktopLayout = new javax.swing.GroupLayout(painelDesktop);
+        painelDesktop.setLayout(painelDesktopLayout);
+        painelDesktopLayout.setHorizontalGroup(
+            painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        painelDesktopLayout.setVerticalGroup(
+            painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 257, Short.MAX_VALUE)
+        );
 
         menuInicio.setText("Início");
 
@@ -69,6 +86,11 @@ public class Menu extends javax.swing.JFrame {
         menuInicio.add(itnHistorico);
 
         itnSobre.setText("Sobre");
+        itnSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itnSobreActionPerformed(evt);
+            }
+        });
         menuInicio.add(itnSobre);
 
         jMenuBar2.add(menuInicio);
@@ -79,16 +101,25 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(painelDesktop)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 269, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(painelDesktop))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void itnSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnSobreActionPerformed
+       FrameSobre frameSobre = new FrameSobre();
+       painelDesktop.add(frameSobre);
+       frameSobre.setVisible(true);
+    }//GEN-LAST:event_itnSobreActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -121,8 +152,22 @@ public class Menu extends javax.swing.JFrame {
             public void run() {
                 new Menu().setVisible(true);
                 
-                CampoVirtual campoVirtual = new CampoVirtual();
-                campoVirtual.exibirCampo();
+//                        JPanel panel = new JPanel(new GridLayout());
+//
+//                JButton botao = new JButton("botao");
+                //botao.setVisible(true);
+
+
+//                panelCampo = new JPanel(new GridLayout());
+//                panelCampo.add(botao);
+                
+//                JPanel panel = new JPanel(new GridLayout());
+//        
+//                JButton botao = new JButton("botao");
+//                panel.add(botao);
+//                
+//                CampoVirtual campoVirtual = new CampoVirtual();
+//                campoVirtual.exibirCampo();
             }
         });
     }
@@ -139,5 +184,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenu menuInicio;
+    private javax.swing.JDesktopPane painelDesktop;
     // End of variables declaration//GEN-END:variables
 }
