@@ -72,6 +72,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu4.setText("Novo Jogo");
 
         itnFacil.setText("Fácil");
+        itnFacil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itnFacilActionPerformed(evt);
+            }
+        });
         jMenu4.add(itnFacil);
 
         itnMedio.setText("Médio");
@@ -118,6 +123,12 @@ public class Menu extends javax.swing.JFrame {
        painelDesktop.add(frameSobre);
        frameSobre.setVisible(true);
     }//GEN-LAST:event_itnSobreActionPerformed
+
+    private void itnFacilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnFacilActionPerformed
+        FrameCampo frameCampo = new FrameCampo();
+        painelDesktop.add(frameCampo);
+        frameCampo.setVisible(true);
+    }//GEN-LAST:event_itnFacilActionPerformed
 
     
     /**

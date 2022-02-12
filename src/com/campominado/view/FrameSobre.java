@@ -61,7 +61,7 @@ public class FrameSobre extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
 
