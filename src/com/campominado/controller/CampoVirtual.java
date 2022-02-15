@@ -9,6 +9,7 @@ public class CampoVirtual {
 
     private int[][] campoConteudo;
     private int[][] campoAreaVazio;
+    private boolean[][] campoVisto;
     private Bomba[]bombas;
 
     private Random geradorPosicoes;
@@ -40,6 +41,8 @@ public class CampoVirtual {
         
         this.campoConteudo = new int[this.getQuantidadeLinhasCampo()][this.getQuantidadeColunasCampo()];
         this.campoAreaVazio = new int[this.getQuantidadeLinhasCampo()][this.getQuantidadeColunasCampo()];
+        this.campoVisto = new boolean[this.getQuantidadeLinhasCampo()][this.getQuantidadeColunasCampo()];
+
         this.bombas = new Bomba[this.quantidadeBombas];
         
         this.geradorPosicoes = new Random();
@@ -51,19 +54,37 @@ public class CampoVirtual {
         this.gerarAreasVazio();
         this.gerarCodAreasVazioDiferentes();
         
+        this.campoNaoVisto();
+        
         this.exibirCampoConteudo();
         System.out.println("\n\n\n");
         this.exibirCampoAreaVazio();
     }
 
-    public int getConteudo(int linhaVisualizar, int colunaVisualizar){
-        return this.campoConteudo[linhaVisualizar][colunaVisualizar];
+    public int getConteudo(int linha, int coluna){
+        return this.campoConteudo[linha][coluna];
     }
     
     public int getCodAreaVazio(int linha, int coluna){
         return this.campoAreaVazio[linha][coluna];
     }
     
+    public void casaVisualizada(int linha, int coluna){
+        this.campoVisto[linha][coluna] = true;
+    }
+    
+    public int quantidadeCasasVisualizadas(){
+        int quantidade = 0;
+        
+        for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
+            for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
+                if(this.campoVisto[indiceLinha][indiceColuna])
+                    quantidade++;
+            }
+        }
+        
+        return quantidade;
+    }
     
     //Métodos auxiliares do campoConteudo
     private void preencherVazio(){
@@ -146,7 +167,7 @@ public class CampoVirtual {
         return disponivel;
     }
     
-//métodos auxiliares do campoAreaVazio
+    //Métodos auxiliares do campoAreaVazio
     private void gerarAreasVazio(){
         for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
             for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
@@ -246,6 +267,16 @@ public class CampoVirtual {
         return false;
     }
      
+    //Método auxiliar do campoVisto
+    private void campoNaoVisto(){
+        for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
+            for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
+                this.campoVisto[indiceLinha][indiceColuna] = false;
+            }
+        }
+    }
+    
+    
     //temporario
     public void exibirCampoConteudo(){
         for(int i = 0; i < this.campoConteudo.length; i++){

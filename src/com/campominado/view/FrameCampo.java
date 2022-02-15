@@ -19,14 +19,25 @@ import javax.swing.table.DefaultTableModel;
 public class FrameCampo extends javax.swing.JInternalFrame {
 
     private CampoVirtual campoVirtual;
+    private int casasSemBomba;
+    
     /**
      * Creates new form FrameCampo
      */
     public FrameCampo(String nivel) {
         initComponents();  
-        gerarTabela(nivel);        
+        gerarTabela(nivel); 
+        this.casasSemBomba = this.campoVirtual.getQuantidadeLinhasCampo() * this.campoVirtual.getQuantidadeColunasCampo() - this.campoVirtual.getQuantidadeBombas();        
     }
 
+    public CampoVirtual getCampoVirtual() {
+        return campoVirtual;
+    }
+
+    public int getCasasSemBomba() {
+        return casasSemBomba;
+    }
+    
     private void gerarTabela(String nivel){
         this.campoVirtual = new CampoVirtual(nivel);
         
@@ -72,6 +83,7 @@ public class FrameCampo extends javax.swing.JInternalFrame {
                 int conteudo = this.campoVirtual.getConteudo(linhaAreaProxima, colunaAreaProxima);
                 
                 this.tblCampo.getModel().setValueAt(conteudo, linhaAreaProxima, colunaAreaProxima);
+                this.campoVirtual.casaVisualizada(linhaAreaProxima, colunaAreaProxima); 
             }
         }
     }
@@ -145,10 +157,10 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         
         int conteudo = this.campoVirtual.getConteudo(linha, coluna);
                 
-        if(conteudo > 0)
+        if(conteudo > 0){
             this.tblCampo.getModel().setValueAt(conteudo, linha, coluna);
-        else if(conteudo == 0){
-            //INICIO - PROGRAMAR AQUI
+            this.campoVirtual.casaVisualizada(linha, coluna);          
+        }else if(conteudo == 0){
             
             int codAreaVazioDetectado = this.campoVirtual.getCodAreaVazio(linha, coluna);
             
@@ -157,21 +169,23 @@ public class FrameCampo extends javax.swing.JInternalFrame {
                     int codAreaVazio = this.campoVirtual.getCodAreaVazio(linhaCampoAreaVazio, colunaCampoAreaVazio);
                     
                     if(codAreaVazio == codAreaVazioDetectado){
-                        //this.tblCampo.getModel().setValueAt(conteudo, linhaCampoAreaVazio, colunaCampoAreaVazio);
-                        this.preencherAreaRedorVazio(linhaCampoAreaVazio, colunaCampoAreaVazio);
+                        this.preencherAreaRedorVazio(linhaCampoAreaVazio, colunaCampoAreaVazio);      
                     }
                 }
             }
             
-            //FIM - PROGRAMAR AQUI
-        }
-        else {
+        }else {
             for(int numeroBomba = 0; numeroBomba < this.campoVirtual.getQuantidadeBombas(); numeroBomba++){
                 this.tblCampo.getModel().setValueAt("*", this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
             }
             JOptionPane.showMessageDialog(null, "Você Perdeu!");
+            this.dispose();
         }
         
+        if(this.campoVirtual.quantidadeCasasVisualizadas() == this.getCasasSemBomba()){
+            JOptionPane.showMessageDialog(null, "PARABÉNS! Você Ganhou!");
+            this.dispose();
+        }
     }//GEN-LAST:event_tblCampoMouseClicked
 
     
