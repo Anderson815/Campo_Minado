@@ -60,7 +60,7 @@ public class FrameHistorico extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblHistorico.setCellSelectionEnabled(true);
+        tblHistorico.setColumnSelectionAllowed(false);
         tblHistorico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(tblHistorico);
         if (tblHistorico.getColumnModel().getColumnCount() > 0) {

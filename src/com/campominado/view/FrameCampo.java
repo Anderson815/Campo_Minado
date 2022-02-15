@@ -36,8 +36,15 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         int quantidadeColunas = this.campoVirtual.getQuantidadeColunasCampo();
         int quantidadeLinhas = this.campoVirtual.getQuantidadeLinhasCampo();
                 
-        DefaultTableModel modelo = (DefaultTableModel) this.tblCampo.getModel();
-
+        
+        DefaultTableModel modelo = new DefaultTableModel(){
+            
+            @Override
+            public boolean isCellEditable(int linha, int coluna){
+                return false;
+            }
+        };
+   
         for(int addColuna = 0; addColuna < quantidadeColunas; addColuna++){
             modelo.addColumn("");
         }
@@ -45,7 +52,8 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         for(int addLinha = 0; addLinha < quantidadeLinhas; addLinha++){
             modelo.addRow(new String[0]);
         }  
-        
+     
+        this.tblCampo.setModel(modelo);
     }
     
     /**
