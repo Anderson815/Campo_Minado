@@ -80,9 +80,19 @@ public class Menu extends javax.swing.JFrame {
         jMenu4.add(itnFacil);
 
         itnMedio.setText("Médio");
+        itnMedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itnMedioActionPerformed(evt);
+            }
+        });
         jMenu4.add(itnMedio);
 
         itnDificil.setText("Difícil");
+        itnDificil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itnDificilActionPerformed(evt);
+            }
+        });
         jMenu4.add(itnDificil);
 
         menuInicio.add(jMenu4);
@@ -130,7 +140,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_itnSobreActionPerformed
 
     private void itnFacilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnFacilActionPerformed
-        FrameCampo frameCampo = new FrameCampo();
+        FrameCampo frameCampo = new FrameCampo("fácil");
         painelDesktop.add(frameCampo);
         frameCampo.setVisible(true);
     }//GEN-LAST:event_itnFacilActionPerformed
@@ -141,6 +151,18 @@ public class Menu extends javax.swing.JFrame {
         
         frameHistorico.setVisible(true);
     }//GEN-LAST:event_itnHistoricoActionPerformed
+
+    private void itnMedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnMedioActionPerformed
+        FrameCampo frameCampo = new FrameCampo("médio");
+        painelDesktop.add(frameCampo);
+        frameCampo.setVisible(true);
+    }//GEN-LAST:event_itnMedioActionPerformed
+
+    private void itnDificilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnDificilActionPerformed
+        FrameCampo frameCampo = new FrameCampo("difícil");
+        painelDesktop.add(frameCampo);
+        frameCampo.setVisible(true);
+    }//GEN-LAST:event_itnDificilActionPerformed
 
     
     /**

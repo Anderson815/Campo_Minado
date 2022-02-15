@@ -45,11 +45,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="M&#xe9;dio"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itnMedioActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="itnDificil">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Dif&#xed;cil"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itnDificilActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>

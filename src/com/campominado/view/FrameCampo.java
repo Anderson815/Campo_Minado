@@ -5,11 +5,12 @@
  */
 package com.campominado.view;
 
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import com.campominado.controller.CampoVirtual;
+
+import javax.swing.JOptionPane;
+
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+
 
 /**
  *
@@ -17,17 +18,23 @@ import javax.swing.table.TableColumn;
  */
 public class FrameCampo extends javax.swing.JInternalFrame {
 
+    private CampoVirtual campoVirtual;
     /**
      * Creates new form FrameCampo
      */
-    public FrameCampo() {
-//        myInitComponent();
-        initComponents();    
+    public FrameCampo(String nivel) {
+        initComponents();  
+        gerarTabela(nivel);        
+    }
+
+    private void gerarTabela(String nivel){
+        this.campoVirtual = new CampoVirtual(nivel);
+        
         this.tblCampo.setTableHeader(null);
         this.tblCampo.setShowGrid(true);
         
-        int quantidadeColunas = 10;
-        int quantidadeLinhas = 8;
+        int quantidadeColunas = this.campoVirtual.getQuantidadeColunasCampo();
+        int quantidadeLinhas = this.campoVirtual.getQuantidadeLinhasCampo();
                 
         DefaultTableModel modelo = (DefaultTableModel) this.tblCampo.getModel();
 
@@ -40,23 +47,6 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         }  
         
     }
-
-//    private void myInitComponent(){
-//        JPanel panelCampo = new JPanel(new GridLayout());
-//
-//        
-//                //botao.setVisible(true);
-//
-//        JButton botao = new JButton("botao");
-//        botao.setVisible(true);
-//        
-//        panelCampo.add(botao);
-//        panelCampo.add(botao);
-//        
-//        panelCampo.setVisible(true);
-//
-//        this.add(panelCampo);
-//    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,7 +61,7 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         tblCampo = new javax.swing.JTable();
         btnFechar = new javax.swing.JButton();
 
-        tblCampo.setBackground(new java.awt.Color(0, 255, 255));
+        tblCampo.setBackground(new java.awt.Color(153, 153, 153));
         tblCampo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tblCampo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,15 +94,14 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
-                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -126,8 +115,23 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         int linha = this.tblCampo.getSelectedRow();
         int coluna = this.tblCampo.getSelectedColumn();
         
-        DefaultTableModel modelo = (DefaultTableModel) this.tblCampo.getModel();  
-        this.tblCampo.getModel().setValueAt("A", linha, coluna);
+        int conteudo = this.campoVirtual.getPosicao(linha, coluna);
+        
+        //DefaultTableModel modelo = (DefaultTableModel) this.tblCampo.getModel();  
+        
+        if(conteudo > 0)
+            this.tblCampo.getModel().setValueAt(conteudo, linha, coluna);
+        else if(conteudo == 0){
+            //PROGRAMAR AQUI
+        }
+        else {
+            for(int numeroBomba = 0; numeroBomba < this.campoVirtual.getQuantidadeBombas(); numeroBomba++){
+                this.tblCampo.getModel().setValueAt("*", this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
+
+            }
+            JOptionPane.showMessageDialog(null, "Você Perdeu!");
+        }
+        
     }//GEN-LAST:event_tblCampoMouseClicked
 
 
