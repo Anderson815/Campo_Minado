@@ -5,11 +5,6 @@
  */
 package com.campominado.view;
 
-import com.campominado.controller.CampoVirtual;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 /**
  *
  * @author ander
@@ -197,22 +192,6 @@ public class Menu extends javax.swing.JFrame {
             public void run() {
                 new Menu().setVisible(true);
                 
-//                        JPanel panel = new JPanel(new GridLayout());
-//
-//                JButton botao = new JButton("botao");
-                //botao.setVisible(true);
-
-
-//                panelCampo = new JPanel(new GridLayout());
-//                panelCampo.add(botao);
-                
-//                JPanel panel = new JPanel(new GridLayout());
-//        
-//                JButton botao = new JButton("botao");
-//                panel.add(botao);
-//                
-//                CampoVirtual campoVirtual = new CampoVirtual();
-//                campoVirtual.exibirCampo();
             }
         });
     }

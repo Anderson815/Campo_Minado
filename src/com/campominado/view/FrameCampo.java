@@ -56,6 +56,26 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         this.tblCampo.setModel(modelo);
     }
     
+    private void preencherAreaRedorVazio(int linhaVazio, int colunaVazio){
+        int linhaAreaProxima;
+        int colunaAreaProxima;
+
+        for(int acrescimoLinha = -1; acrescimoLinha <= 1; acrescimoLinha++){
+            for(int acrescimoColuna = -1; acrescimoColuna <= 1; acrescimoColuna++){
+
+                linhaAreaProxima = linhaVazio + acrescimoLinha;
+                colunaAreaProxima = colunaVazio + acrescimoColuna;
+
+                if((linhaAreaProxima < 0 || linhaAreaProxima >= this.campoVirtual.getQuantidadeLinhasCampo()) || (colunaAreaProxima < 0 || colunaAreaProxima >= this.campoVirtual.getQuantidadeColunasCampo()))
+                    continue;
+
+                int conteudo = this.campoVirtual.getConteudo(linhaAreaProxima, colunaAreaProxima);
+                
+                this.tblCampo.getModel().setValueAt(conteudo, linhaAreaProxima, colunaAreaProxima);
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,25 +143,38 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         int linha = this.tblCampo.getSelectedRow();
         int coluna = this.tblCampo.getSelectedColumn();
         
-        int conteudo = this.campoVirtual.getPosicao(linha, coluna);
-        
-        //DefaultTableModel modelo = (DefaultTableModel) this.tblCampo.getModel();  
-        
+        int conteudo = this.campoVirtual.getConteudo(linha, coluna);
+                
         if(conteudo > 0)
             this.tblCampo.getModel().setValueAt(conteudo, linha, coluna);
         else if(conteudo == 0){
-            //PROGRAMAR AQUI
+            //INICIO - PROGRAMAR AQUI
+            
+            int codAreaVazioDetectado = this.campoVirtual.getCodAreaVazio(linha, coluna);
+            
+            for(int linhaCampoAreaVazio = 0; linhaCampoAreaVazio < this.campoVirtual.getQuantidadeLinhasCampo(); linhaCampoAreaVazio++){
+                for(int colunaCampoAreaVazio = 0; colunaCampoAreaVazio < this.campoVirtual.getQuantidadeColunasCampo(); colunaCampoAreaVazio++){
+                    int codAreaVazio = this.campoVirtual.getCodAreaVazio(linhaCampoAreaVazio, colunaCampoAreaVazio);
+                    
+                    if(codAreaVazio == codAreaVazioDetectado){
+                        //this.tblCampo.getModel().setValueAt(conteudo, linhaCampoAreaVazio, colunaCampoAreaVazio);
+                        this.preencherAreaRedorVazio(linhaCampoAreaVazio, colunaCampoAreaVazio);
+                    }
+                }
+            }
+            
+            //FIM - PROGRAMAR AQUI
         }
         else {
             for(int numeroBomba = 0; numeroBomba < this.campoVirtual.getQuantidadeBombas(); numeroBomba++){
                 this.tblCampo.getModel().setValueAt("*", this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
-
             }
             JOptionPane.showMessageDialog(null, "Você Perdeu!");
         }
         
     }//GEN-LAST:event_tblCampoMouseClicked
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFechar;

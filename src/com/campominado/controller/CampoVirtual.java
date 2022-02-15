@@ -49,20 +49,23 @@ public class CampoVirtual {
         this.preencherDicas();
 
         this.gerarAreasVazio();
-        this.gerarDefinicoesAreasDiferentesVazio();
+        this.gerarCodAreasVazioDiferentes();
         
         this.exibirCampoConteudo();
         System.out.println("\n\n\n");
         this.exibirCampoAreaVazio();
     }
 
-    public int getPosicao(int linhaVisualizar, int colunaVisualizar){
+    public int getConteudo(int linhaVisualizar, int colunaVisualizar){
         return this.campoConteudo[linhaVisualizar][colunaVisualizar];
     }
     
+    public int getCodAreaVazio(int linha, int coluna){
+        return this.campoAreaVazio[linha][coluna];
+    }
     
     
-    //Métodos auxiliares
+    //Métodos auxiliares do campoConteudo
     private void preencherVazio(){
         for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
             for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
@@ -120,8 +123,30 @@ public class CampoVirtual {
             }
         }
     }
+    
+    private boolean posicaoBombaValida(int linhaBombaGerado, int colunaBombaGerado){
 
-        //métodos auxiliares do campoAreaVazio
+        boolean disponivel = true;
+        int linhaBomba;
+        int colunaBomba;
+
+        for(int numeroBomba = 0; numeroBomba < this.getQuantidadeBombas(); numeroBomba++){
+
+            if(this.bombas[numeroBomba] != null) {
+                linhaBomba = this.bombas[numeroBomba].getLinha();
+                colunaBomba = this.bombas[numeroBomba].getColuna();
+
+                if (linhaBomba == linhaBombaGerado && colunaBomba == colunaBombaGerado) {
+                    disponivel = false;
+                    break;
+                }
+            }
+        }
+
+        return disponivel;
+    }
+    
+//métodos auxiliares do campoAreaVazio
     private void gerarAreasVazio(){
         for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
             for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
@@ -133,7 +158,7 @@ public class CampoVirtual {
         }
     }
 
-    private void gerarDefinicoesAreasDiferentesVazio(){
+    private void gerarCodAreasVazioDiferentes(){
 
         int area = 1;
         boolean primeiroJaMarcado;
@@ -143,58 +168,58 @@ public class CampoVirtual {
             primeiroJaMarcado = false;
             repetir = false;
 
-            //normal
-            for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
-                for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
-                    if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
-                        primeiroJaMarcado = true;
-                    }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+            for(int vezes = 1; vezes <= 2; vezes++){
+                //normal
+                for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
+                    for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
+                        if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                            primeiroJaMarcado = true;
+                        }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                        }
                     }
                 }
-            }
 
-            //inverso normal
-            for(int indiceLinha = this.getQuantidadeLinhasCampo() - 1; indiceLinha >= 0; indiceLinha--){
-                for(int indiceColuna = this.getQuantidadeColunasCampo() - 1; indiceColuna >= 0; indiceColuna--){
-                    if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
-                        primeiroJaMarcado = true;
-                    }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                //inverso normal
+                for(int indiceLinha = this.getQuantidadeLinhasCampo() - 1; indiceLinha >= 0; indiceLinha--){
+                    for(int indiceColuna = this.getQuantidadeColunasCampo() - 1; indiceColuna >= 0; indiceColuna--){
+                        if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                            primeiroJaMarcado = true;
+                        }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                        }
                     }
                 }
-            }
 
-            // de cima para baixo da direita para esquerda
-            for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
-                for(int indiceColuna = this.getQuantidadeColunasCampo() - 1; indiceColuna >= 0; indiceColuna--){
-                    if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
-                        primeiroJaMarcado = true;
-                    }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                // de cima para baixo da direita para esquerda
+                for(int indiceLinha = 0; indiceLinha < this.getQuantidadeLinhasCampo(); indiceLinha++){
+                    for(int indiceColuna = this.getQuantidadeColunasCampo() - 1; indiceColuna >= 0; indiceColuna--){
+                        if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                            primeiroJaMarcado = true;
+                        }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                        }
                     }
                 }
-            }
 
-            //de baixo para cima da esquerda para direita
-            for(int indiceLinha = this.getQuantidadeLinhasCampo() - 1; indiceLinha >= 0; indiceLinha--){
-                for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
-                    if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
-                        primeiroJaMarcado = true;
-                    }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
-                        this.campoAreaVazio[indiceLinha][indiceColuna] = area;
-                    }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0)
-                        repetir = true;
+                //de baixo para cima da esquerda para direita
+                for(int indiceLinha = this.getQuantidadeLinhasCampo() - 1; indiceLinha >= 0; indiceLinha--){
+                    for(int indiceColuna = 0; indiceColuna < this.getQuantidadeColunasCampo(); indiceColuna++){
+                        if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && !primeiroJaMarcado){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                            primeiroJaMarcado = true;
+                        }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0 && primeiroJaMarcado && this.areaProximoVaziaIgual(area, indiceLinha, indiceColuna)){
+                            this.campoAreaVazio[indiceLinha][indiceColuna] = area;
+                        }else if(this.campoAreaVazio[indiceLinha][indiceColuna] == 0)
+                            repetir = true;
+                    }
                 }
             }
             area++;
         }while(repetir);
-
-
 
     }
 
@@ -220,31 +245,7 @@ public class CampoVirtual {
 
         return false;
     }
-    
-    private boolean posicaoBombaValida(int linhaBombaGerado, int colunaBombaGerado){
-
-        boolean disponivel = true;
-        int linhaBomba;
-        int colunaBomba;
-
-        for(int numeroBomba = 0; numeroBomba < this.getQuantidadeBombas(); numeroBomba++){
-
-            if(this.bombas[numeroBomba] != null) {
-                linhaBomba = this.bombas[numeroBomba].getLinha();
-                colunaBomba = this.bombas[numeroBomba].getColuna();
-
-                if (linhaBomba == linhaBombaGerado && colunaBomba == colunaBombaGerado) {
-                    disponivel = false;
-                    break;
-                }
-            }
-        }
-
-        return disponivel;
-    }
-
-    
-    
+     
     //temporario
     public void exibirCampoConteudo(){
         for(int i = 0; i < this.campoConteudo.length; i++){
