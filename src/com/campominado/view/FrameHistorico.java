@@ -51,17 +51,9 @@ public class FrameHistorico extends javax.swing.JInternalFrame {
             new String [] {
                 "Data", "Duração"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblHistorico.setColumnSelectionAllowed(false);
+        ));
         tblHistorico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblHistorico.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblHistorico);
         if (tblHistorico.getColumnModel().getColumnCount() > 0) {
             tblHistorico.getColumnModel().getColumn(0).setResizable(false);

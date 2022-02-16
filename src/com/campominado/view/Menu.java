@@ -5,18 +5,29 @@
  */
 package com.campominado.view;
 
+import java.sql.Connection;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JInternalFrame;
+
+//REMOVER DEPOIS
+import com.campominado.bd.ConnectionFactory;
+
 /**
  *
  * @author ander
  */
 public class Menu extends javax.swing.JFrame {
 
-    
+    private List<JInternalFrame> telas;
+    private Connection conexao;
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+        this.telas = new ArrayList<JInternalFrame>();
+        this.conexao = ConnectionFactory.getConnection();
     }
 
     /**
@@ -129,36 +140,51 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itnSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnSobreActionPerformed
-       FrameSobre frameSobre = new FrameSobre();
-       painelDesktop.add(frameSobre);
-       frameSobre.setVisible(true);
+        this.fecharTelas();
+        FrameSobre frameSobre = new FrameSobre();
+        painelDesktop.add(frameSobre);
+        frameSobre.setVisible(true);
+        this.telas.add(frameSobre);
     }//GEN-LAST:event_itnSobreActionPerformed
 
     private void itnFacilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnFacilActionPerformed
+        this.fecharTelas();
         FrameCampo frameCampo = new FrameCampo("fácil");
         painelDesktop.add(frameCampo);
         frameCampo.setVisible(true);
+        this.telas.add(frameCampo);
     }//GEN-LAST:event_itnFacilActionPerformed
 
     private void itnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnHistoricoActionPerformed
+        this.fecharTelas();
         FrameHistorico frameHistorico = new FrameHistorico();
-        painelDesktop.add(frameHistorico);
-        
+        painelDesktop.add(frameHistorico);        
         frameHistorico.setVisible(true);
+        this.telas.add(frameHistorico);
     }//GEN-LAST:event_itnHistoricoActionPerformed
 
     private void itnMedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnMedioActionPerformed
+        this.fecharTelas();
         FrameCampo frameCampo = new FrameCampo("médio");
         painelDesktop.add(frameCampo);
         frameCampo.setVisible(true);
+        this.telas.add(frameCampo);
     }//GEN-LAST:event_itnMedioActionPerformed
 
     private void itnDificilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itnDificilActionPerformed
+        this.fecharTelas();
         FrameCampo frameCampo = new FrameCampo("difícil");
         painelDesktop.add(frameCampo);
         frameCampo.setVisible(true);
+        this.telas.add(frameCampo);
     }//GEN-LAST:event_itnDificilActionPerformed
 
+    private void fecharTelas(){
+        for(JInternalFrame tela : this.telas){
+            tela.dispose();
+        }
+        this.telas.clear();
+    }
     
     /**
      * @param args the command line arguments

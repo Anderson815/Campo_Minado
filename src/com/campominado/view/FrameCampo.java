@@ -5,11 +5,20 @@
  */
 package com.campominado.view;
 
+import com.campominado.bd.PartidaBeans;
+import com.campominado.bd.PartidaDAO;
 import com.campominado.controller.CampoVirtual;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 
 /**
@@ -20,6 +29,8 @@ public class FrameCampo extends javax.swing.JInternalFrame {
 
     private CampoVirtual campoVirtual;
     private int casasSemBomba;
+    private Calendar tempoInicio;
+    private String nivel;
     
     /**
      * Creates new form FrameCampo
@@ -28,6 +39,8 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         initComponents();  
         gerarTabela(nivel); 
         this.casasSemBomba = this.campoVirtual.getQuantidadeLinhasCampo() * this.campoVirtual.getQuantidadeColunasCampo() - this.campoVirtual.getQuantidadeBombas();        
+        this.tempoInicio = Calendar.getInstance();
+        this.nivel = nivel;
     }
 
     public CampoVirtual getCampoVirtual() {
@@ -63,7 +76,7 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         for(int addLinha = 0; addLinha < quantidadeLinhas; addLinha++){
             modelo.addRow(new String[0]);
         }  
-     
+       
         this.tblCampo.setModel(modelo);
     }
     
@@ -177,13 +190,31 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         }else {
             for(int numeroBomba = 0; numeroBomba < this.campoVirtual.getQuantidadeBombas(); numeroBomba++){
                 this.tblCampo.getModel().setValueAt("*", this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
+                
+//                try{
+//                    URL url = new URL("\\com\\campominado\\img\\bomba.png");
+//                    this.tblCampo.getModel().setValueAt(new ImageIcon("/com/campominado/img/bomba.png"), this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
+//                }catch(MalformedURLException e){
+//                    System.out.println("Deu erro no URL");
+//                    System.out.println(e.getMessage());
+//                }
+//                System.out.println(this.tblCampo.getModel().getValueAt(this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna()));
             }
             JOptionPane.showMessageDialog(null, "Você Perdeu!");
             this.dispose();
         }
-        
+          
         if(this.campoVirtual.quantidadeCasasVisualizadas() == this.getCasasSemBomba()){
             JOptionPane.showMessageDialog(null, "PARABÉNS! Você Ganhou!");
+            
+            Calendar tempoFim = Calendar.getInstance();
+            long duracao = tempoFim.getTimeInMillis() - this.tempoInicio.getTimeInMillis();
+            
+            PartidaBeans partidaBeans = new PartidaBeans(this.tempoInicio, duracao, this.nivel);
+            
+            PartidaDAO partidaDAO = new PartidaDAO();
+            partidaDAO.adicionar(partidaBeans);
+            
             this.dispose();
         }
     }//GEN-LAST:event_tblCampoMouseClicked
