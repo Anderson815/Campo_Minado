@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JInternalFrame;
 
-//REMOVER DEPOIS
-import com.campominado.bd.ConnectionFactory;
-
 /**
  *
  * @author ander
@@ -20,14 +17,12 @@ import com.campominado.bd.ConnectionFactory;
 public class Menu extends javax.swing.JFrame {
 
     private List<JInternalFrame> telas;
-    private Connection conexao;
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
         this.telas = new ArrayList<JInternalFrame>();
-        this.conexao = ConnectionFactory.getConnection();
     }
 
     /**

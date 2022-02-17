@@ -5,6 +5,13 @@
  */
 package com.campominado.view;
 
+import com.campominado.bd.PartidaBeans;
+import com.campominado.bd.PartidaDAO;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author ander
@@ -16,6 +23,26 @@ public class FrameHistorico extends javax.swing.JInternalFrame {
      */
     public FrameHistorico() {
         initComponents();
+        PartidaDAO partidaDAO = new PartidaDAO();
+        
+        List<PartidaBeans> listPartidas = new ArrayList<>();
+        
+        listPartidas = partidaDAO.getPartidasNivel("fácil");
+        
+        for(PartidaBeans partida : listPartidas){
+            System.out.println("----------------------------------");
+            
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+            String data = formatDate.format(partida.getData().getTime());
+            
+            SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss");
+            String duracao = formatTime.format(new Date(partida.getDuracao()));
+            
+            System.out.println("Data: " + data);
+            System.out.println("Duração: " + duracao);
+            System.out.println("Nível: " + partida.getNivel());
+        }
+        
         //this.tblHistorico.setTableHeader(null);
     }
 
