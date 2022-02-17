@@ -10,7 +10,6 @@ import com.campominado.bd.PartidaDAO;
 import com.campominado.controller.CampoVirtual;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -18,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 
 /**
@@ -177,6 +175,7 @@ public class FrameCampo extends javax.swing.JInternalFrame {
             for(int numeroBomba = 0; numeroBomba < this.campoVirtual.getQuantidadeBombas(); numeroBomba++){
                 this.tblCampo.getModel().setValueAt("*", this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
                 
+                
 //                try{
 //                    URL url = new URL("\\com\\campominado\\img\\bomba.png");
 //                    this.tblCampo.getModel().setValueAt(new ImageIcon("/com/campominado/img/bomba.png"), this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
@@ -187,7 +186,7 @@ public class FrameCampo extends javax.swing.JInternalFrame {
 //                System.out.println(this.tblCampo.getModel().getValueAt(this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna()));
             }
             JOptionPane.showMessageDialog(null, "Você Perdeu!");
-            this.dispose();
+            this.tblCampo.setEnabled(false);
         }
           
         if(this.campoVirtual.quantidadeCasasVisualizadas() == this.getCasasSemBomba()){

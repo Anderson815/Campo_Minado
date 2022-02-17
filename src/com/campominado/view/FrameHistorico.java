@@ -24,6 +24,7 @@ public class FrameHistorico extends javax.swing.JInternalFrame {
      */
     public FrameHistorico() {
         initComponents();
+        this.tblHistorico.setShowGrid(true);
         this.pegarDados();
     }
 

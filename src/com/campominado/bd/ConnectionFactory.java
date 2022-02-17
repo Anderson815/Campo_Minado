@@ -5,6 +5,7 @@
  */
 package com.campominado.bd;
 
+import com.campominado.config.ConfigBD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,8 +21,9 @@ public class ConnectionFactory {
         
         try{
             // jdbc:mysql://127.0.0.1:3306/?user=root
-           
-            retorno =  DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/campo_minado", "root", "");
+            ConfigBD configuracao = new ConfigBD();
+            
+            retorno =  DriverManager.getConnection(configuracao.getUrl(), configuracao.getUsuario(), configuracao.getSenha());
             System.out.println("LOL");
         }
         catch(SQLException erro){
@@ -31,4 +33,5 @@ public class ConnectionFactory {
         
         return retorno;
     }
+    
 }

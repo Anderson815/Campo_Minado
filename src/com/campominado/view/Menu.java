@@ -5,6 +5,9 @@
  */
 package com.campominado.view;
 
+import com.campominado.bd.ConnectionFactory;
+import com.campominado.bd.EstruturaBanco;
+import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JInternalFrame;
@@ -22,6 +25,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         this.telas = new ArrayList<JInternalFrame>();
+        EstruturaBanco.createTablePartida();
     }
 
     /**
