@@ -67,6 +67,9 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblCampoMouseClicked"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.campominado.style.TablePersonalizado()"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

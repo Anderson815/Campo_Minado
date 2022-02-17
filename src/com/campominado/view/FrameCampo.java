@@ -8,13 +8,11 @@ package com.campominado.view;
 import com.campominado.bd.PartidaBeans;
 import com.campominado.bd.PartidaDAO;
 import com.campominado.controller.CampoVirtual;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Calendar;
-import java.util.Date;
-import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -66,16 +64,24 @@ public class FrameCampo extends javax.swing.JInternalFrame {
                 return false;
             }
         };
-   
+           
         for(int addColuna = 0; addColuna < quantidadeColunas; addColuna++){
             modelo.addColumn("");
         }
-        
+               
         for(int addLinha = 0; addLinha < quantidadeLinhas; addLinha++){
             modelo.addRow(new String[0]);
         }  
        
         this.tblCampo.setModel(modelo);
+        
+        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
+        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        for(int coluna = 0; coluna < modelo.getColumnCount(); coluna++){
+            this.tblCampo.getColumnModel().getColumn(coluna).setCellRenderer(centralizado);
+        }
+            
     }
     
     private void preencherAreaRedorVazio(int linhaVazio, int colunaVazio){
@@ -109,7 +115,7 @@ public class FrameCampo extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCampo = new javax.swing.JTable();
+        tblCampo = new com.campominado.style.TablePersonalizado();
 
         tblCampo.setBackground(new java.awt.Color(153, 153, 153));
         tblCampo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -174,18 +180,8 @@ public class FrameCampo extends javax.swing.JInternalFrame {
         }else {
             for(int numeroBomba = 0; numeroBomba < this.campoVirtual.getQuantidadeBombas(); numeroBomba++){
                 this.tblCampo.getModel().setValueAt("*", this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
-                
-                
-//                try{
-//                    URL url = new URL("\\com\\campominado\\img\\bomba.png");
-//                    this.tblCampo.getModel().setValueAt(new ImageIcon("/com/campominado/img/bomba.png"), this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna());
-//                }catch(MalformedURLException e){
-//                    System.out.println("Deu erro no URL");
-//                    System.out.println(e.getMessage());
-//                }
-//                System.out.println(this.tblCampo.getModel().getValueAt(this.campoVirtual.getBombas()[numeroBomba].getLinha(), this.campoVirtual.getBombas()[numeroBomba].getColuna()));
             }
-            JOptionPane.showMessageDialog(null, "Você Perdeu!");
+            JOptionPane.showMessageDialog(null, "Você Perdeu!");          
             this.tblCampo.setEnabled(false);
         }
           

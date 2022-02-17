@@ -5,9 +5,7 @@
  */
 package com.campominado.view;
 
-import com.campominado.bd.ConnectionFactory;
 import com.campominado.bd.EstruturaBanco;
-import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JInternalFrame;
@@ -49,6 +47,7 @@ public class Menu extends javax.swing.JFrame {
         itnDificil = new javax.swing.JMenuItem();
         itnHistorico = new javax.swing.JMenuItem();
         itnSobre = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -64,11 +63,11 @@ public class Menu extends javax.swing.JFrame {
         painelDesktop.setLayout(painelDesktopLayout);
         painelDesktopLayout.setHorizontalGroup(
             painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
         painelDesktopLayout.setVerticalGroup(
             painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 257, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         menuInicio.setText("Início");
@@ -117,6 +116,14 @@ public class Menu extends javax.swing.JFrame {
         });
         menuInicio.add(itnSobre);
 
+        jMenuItem1.setText("Sair");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuInicio.add(jMenuItem1);
+
         jMenuBar2.add(menuInicio);
 
         setJMenuBar(jMenuBar2);
@@ -130,8 +137,9 @@ public class Menu extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painelDesktop))
+                .addGap(0, 0, 0)
+                .addComponent(painelDesktop)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -176,6 +184,10 @@ public class Menu extends javax.swing.JFrame {
         frameCampo.setVisible(true);
         this.telas.add(frameCampo);
     }//GEN-LAST:event_itnDificilActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void fecharTelas(){
         for(JInternalFrame tela : this.telas){
@@ -229,6 +241,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenu menuInicio;

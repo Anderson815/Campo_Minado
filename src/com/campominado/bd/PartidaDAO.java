@@ -50,7 +50,6 @@ public class PartidaDAO {
             ps.execute();
             ps.close();
 
-            System.out.println("GRAVADO COM SUCESSO");
         }catch(SQLException erro){
             System.out.println(erro.getMessage());
         }

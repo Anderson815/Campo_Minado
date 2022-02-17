@@ -56,9 +56,6 @@ public class CampoVirtual {
         
         this.campoNaoVisto();
         
-        this.exibirCampoConteudo();
-        System.out.println("\n\n\n");
-        this.exibirCampoAreaVazio();
     }
 
     public int getConteudo(int linha, int coluna){
@@ -276,26 +273,6 @@ public class CampoVirtual {
         }
     }
     
-    
-    //temporario
-    public void exibirCampoConteudo(){
-        for(int i = 0; i < this.campoConteudo.length; i++){
-            for(int j = 0; j < this.campoConteudo[i].length; j++){
-                System.out.print(this.campoConteudo[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
-    public void exibirCampoAreaVazio(){
-        for(int i = 0; i < this.campoConteudo.length; i++){
-            for(int j = 0; j < this.campoConteudo[i].length; j++){
-                System.out.print(this.campoAreaVazio[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
     //Sets e Gets
     
     public int getQuantidadeBombas() {

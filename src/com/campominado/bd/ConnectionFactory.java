@@ -24,7 +24,6 @@ public class ConnectionFactory {
             ConfigBD configuracao = new ConfigBD();
             
             retorno =  DriverManager.getConnection(configuracao.getUrl(), configuracao.getUsuario(), configuracao.getSenha());
-            System.out.println("LOL");
         }
         catch(SQLException erro){
             System.out.println("Deu errado a conexão");
