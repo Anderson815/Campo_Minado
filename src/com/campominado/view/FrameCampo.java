@@ -11,11 +11,6 @@ import com.campominado.controller.CampoVirtual;
 import java.util.Calendar;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-
-import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -32,8 +27,8 @@ public class FrameCampo extends javax.swing.JInternalFrame {
      * Creates new form FrameCampo
      */
     public FrameCampo(String nivel) {
+        this.campoVirtual = new CampoVirtual(nivel);
         initComponents();  
-        gerarTabela(nivel); 
         this.casasSemBomba = this.campoVirtual.getQuantidadeLinhasCampo() * this.campoVirtual.getQuantidadeColunasCampo() - this.campoVirtual.getQuantidadeBombas();        
         this.tempoInicio = Calendar.getInstance();
         this.nivel = nivel;
@@ -46,44 +41,7 @@ public class FrameCampo extends javax.swing.JInternalFrame {
     public int getCasasSemBomba() {
         return casasSemBomba;
     }
-    
-    private void gerarTabela(String nivel){
-        this.campoVirtual = new CampoVirtual(nivel);
         
-        this.tblCampo.setTableHeader(null);
-        this.tblCampo.setShowGrid(true);
-        
-        int quantidadeColunas = this.campoVirtual.getQuantidadeColunasCampo();
-        int quantidadeLinhas = this.campoVirtual.getQuantidadeLinhasCampo();
-                
-        
-        DefaultTableModel modelo = new DefaultTableModel(){
-            
-            @Override
-            public boolean isCellEditable(int linha, int coluna){
-                return false;
-            }
-        };
-           
-        for(int addColuna = 0; addColuna < quantidadeColunas; addColuna++){
-            modelo.addColumn("");
-        }
-               
-        for(int addLinha = 0; addLinha < quantidadeLinhas; addLinha++){
-            modelo.addRow(new String[0]);
-        }  
-       
-        this.tblCampo.setModel(modelo);
-        
-        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
-        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        for(int coluna = 0; coluna < modelo.getColumnCount(); coluna++){
-            this.tblCampo.getColumnModel().getColumn(coluna).setCellRenderer(centralizado);
-        }
-            
-    }
-    
     private void preencherAreaRedorVazio(int linhaVazio, int colunaVazio){
         int linhaAreaProxima;
         int colunaAreaProxima;
@@ -115,43 +73,39 @@ public class FrameCampo extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCampo = new com.campominado.style.TablePersonalizado();
+        tblCampo = new com.campominado.style.TablePersonalizado(this.campoVirtual.getQuantidadeLinhasCampo(), this.campoVirtual.getQuantidadeColunasCampo());
 
         tblCampo.setBackground(new java.awt.Color(153, 153, 153));
         tblCampo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tblCampo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        //},
+    //        new String [] {
+        //
+        //            }
+    tblCampo.setCellSelectionEnabled(true);
+    tblCampo.setGridColor(new java.awt.Color(0, 0, 0));
+    tblCampo.setRowHeight(30);
+    tblCampo.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            tblCampoMouseClicked(evt);
+        }
+    });
+    jScrollPane1.setViewportView(tblCampo);
+    tblCampo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-            },
-            new String [] {
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+            .addGap(0, 0, 0))
+    );
 
-            }
-        ));
-        tblCampo.setCellSelectionEnabled(true);
-        tblCampo.setGridColor(new java.awt.Color(0, 0, 0));
-        tblCampo.setRowHeight(30);
-        tblCampo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCampoMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblCampo);
-        tblCampo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
-
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblCampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCampoMouseClicked
@@ -207,3 +161,14 @@ public class FrameCampo extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblCampo;
     // End of variables declaration//GEN-END:variables
 }
+
+
+
+//tblCampo.setModel(new javax.swing.table.DefaultTableModel(
+//        new Object [][] {
+//        
+//           },
+//        new String [] {
+//        
+//            }
+//));

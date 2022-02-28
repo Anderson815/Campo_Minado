@@ -55,7 +55,7 @@ public class CampoVirtual {
         this.gerarCodAreasVazioDiferentes();
         
         this.campoNaoVisto();
-        
+               
     }
 
     public int getConteudo(int linha, int coluna){
